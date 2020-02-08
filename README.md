@@ -19,6 +19,8 @@ Lai uzbūvētu docker image un tās palaistu, tiek izmantots docker-compose.
 9. Jāizpilda migrācijas ```docker-compose exec app php artisan migrate```
 10. Jāizpilda komanda ```docker-compose exec app chown -R www-data:www-data .```
 
+Lietotne pieejama adresē ```127.0.0.1:8080```
+
 ## Valūtu kursu ielāde
 
 Lai ielādētu valūtu kursus datubāzē, jāizpilda komanda 
