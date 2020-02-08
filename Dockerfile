@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     unzip
 
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN apt-get install -yq nodejs npm nano cron
 
 COPY ./src/composer.lock ./src/composer.json /var/www/
 
@@ -27,3 +28,4 @@ WORKDIR /var/www
 
 COPY ./src /var/www
 COPY --chown=www:www ./src /var/www
+RUN chmod -R 755 /var/www/storage
