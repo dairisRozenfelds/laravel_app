@@ -17,13 +17,7 @@ Lai uzbūvētu docker image un tās palaistu, tiek izmantots docker-compose.
 7. Jāielādē node atkarības ```docker-compose exec app npm i```
 8. Jānokompilē JS un SCSS faili (development režīms) ```docker-compose exec app npm run dev```
 9. Jāizpilda migrācijas ```docker-compose exec app php artisan migrate```
-
-## Piekļuve konteinerim
-
-Lai iekļūtu konteinerī, ir jāizpilda komanda
-```bash
-docker exec -it app /bin/bash
-```
+10. Jāizpilda komanda ```docker-compose exec app chown -R www-data:www-data .```
 
 ## Valūtu kursu ielāde
 
@@ -37,3 +31,9 @@ Komanda ```currency:fetch``` arī ir iestatīta kā "schedule", kas izpildās di
 * * * * * php artisan schedule:run >> /dev/null 2>&1
 ```
 
+## Piekļuve konteinerim
+
+Lai iekļūtu konteinerī, ir jāizpilda komanda
+```bash
+docker exec -it app /bin/bash
+```
