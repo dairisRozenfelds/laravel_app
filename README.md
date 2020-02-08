@@ -11,7 +11,7 @@ Lai uzbūvētu docker image un tās palaistu, tiek izmantots docker-compose.
 1. Jāaiziet uz projekta saknes mapi
 2. Jāielādē composer atkarības ```docker run --rm -v $(pwd)/src:/app composer install```
 3. Visas projekta mapes tiesības jāpiešķir jūsu lietotājam ```sudo chown -R $USER:$USER .```
-4. Jāizpilda komanda ```docker-compose up --build```
+4. Jāizpilda komanda, kas uzbūvēs un palaidīs nepieciešamos konteinerus ```docker-compose up --build```
 5. Jāpārkopē .env.local fails kā .env ```cp src/.env.local src/.env```
 6. Jāuzģenerē Laravel atslēgas: ```docker-compose exec app php artisan key:generate```
 7. Jāielādē node atkarības ```docker-compose exec app npm i```
@@ -25,10 +25,6 @@ Lai iekļūtu konteinerī, ir jāizpilda komanda
 docker exec -it app /bin/bash
 ```
 
-Konteinerī ir izveidots lietotājs ```www```, kam ir dotas pieejas ```/var/www``` mapei
-
-
-
 ## Valūtu kursu ielāde
 
 Lai ielādētu valūtu kursus datubāzē, jāizpilda komanda 
@@ -36,7 +32,7 @@ Lai ielādētu valūtu kursus datubāzē, jāizpilda komanda
 docker-compose exec app php artisan currency:fetch
 ```
 
-Komanda ```currency:fetch``` arī ir iestatīta kā "schedule", kas izpildās divas reizes dienā plkst. 00:00 un 12:00. Lai palaistu "schedule", ir nepieciešams uzstādīt Laravel crontab, kas iespējams ar komandu 
+Komanda ```currency:fetch``` arī ir iestatīta kā "schedule", kas izpildās divas reizes dienā plkst. 00:00 un 12:00. Lai palaistu "schedule", ir nepieciešams uzstādīt Laravel crontab, kas iespējams ar komandu (komanda jāizpilda iekš app konteinera) 
 ```bash
 * * * * * php artisan schedule:run >> /dev/null 2>&1
 ```
