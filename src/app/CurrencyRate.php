@@ -15,9 +15,14 @@ use Illuminate\Database\Eloquent\Model;
 class CurrencyRate extends Model
 {
     /**
+     * Define the table name
+     */
+    const TABLE_NAME = 'currency_rates';
+
+    /**
      * @var string
      */
-    protected $table = 'currency_rates';
+    protected $table = self::TABLE_NAME;
 
     /**
      * @return string

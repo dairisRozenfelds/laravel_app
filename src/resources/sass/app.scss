@@ -1,1 +1,156 @@
-//
+@import 'fonts';
+@import 'variables';
+
+body {
+    font-family: 'Roboto', Tahoma, sans-serif;
+    color: $color-dark-grey-1;
+    margin: 0;
+}
+
+.Main {
+    background-color: $color-bg;
+
+    .Header {
+        padding: 20px 0;
+        background-color: $color-white;
+        box-shadow: $shadow-default;
+        margin-bottom: 25px;
+
+        &__title {
+            max-width: $currency-block-width;
+            margin: auto;
+
+            h1 {
+                font-size: 30px;
+            }
+
+            h2 {
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .App {
+        margin: auto;
+        max-width: $content-width;
+    }
+}
+
+.currencyRates {
+    margin: auto;
+    max-width: $currency-block-width;
+
+    &__navigation {
+        margin-bottom: 20px;
+
+        .NavigationItem {
+            padding: 5px;
+            border-radius: 5px;
+            background-color: $color-blue;
+            box-shadow: $shadow-default;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $color-dark-blue;
+            }
+
+            &__currency {
+                span {
+                    color: $color-white;
+                    font-weight: 700;
+                    font-size: 10px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+    .CurrencyRate {
+        background: linear-gradient(35deg, $color-light-grey 0, $color-white 100%);
+        box-shadow: $shadow-default;
+        color: $color-dark-grey-2;
+        padding: 20px 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        display: flex;
+
+        &__leftBlock,
+        &__rightBlock {
+            flex: 1;
+        }
+
+        &__currency {
+            .currencyLabel {
+                font-size: 14px;
+                display: block;
+            }
+
+            .currencyValue {
+                color: $color-dark-grey-1;
+                font-weight: 700;
+                font-size: 35px;
+            }
+        }
+
+        &__rate,
+        &__publishedAt {
+            .currencyLabel,
+            .currencyValue {
+                display: block;
+            }
+
+            .currencyLabel {
+                font-size: 12px;
+                margin-bottom: 2px;
+            }
+
+            .currencyValue {
+                color: $color-dark-grey-1;
+                font-weight: 500;
+            }
+        }
+
+        &__rate {
+            margin-bottom: 7px;
+        }
+    }
+
+    .Pagination {
+        margin: 30px 0;
+    }
+}
+
+.Pagination {
+    background-color: $color-blue;
+    box-shadow: $shadow-default;
+    display: inline-block;
+    border-radius: 5px;
+    overflow: hidden;
+
+    &__pageItem {
+        display: inline-block;
+        color: $color-white;
+        background-color: $color-blue;
+        font-weight: 700;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $color-dark-blue;
+        }
+
+        &--active {
+            background-color: $color-dark-blue;
+            cursor: initial;
+
+            &:hover {
+                background-color: $color-dark-blue;
+            }
+        }
+    }
+}

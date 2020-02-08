@@ -16,6 +16,12 @@ class FetchCurrencyRates extends Command
     const FETCH_URL = 'https://www.bank.lv/vk/ecb_rss.xml';
 
     /**
+     * Regular expression for matching currency code format, for example:
+     * EUR, USD, ...
+     */
+    const CURRENCY_FORMAT_REGEX = '/^[A-Z]{3}$/';
+
+    /**
      * {@inheritdoc}
      */
     protected $signature = 'currency:fetch';
@@ -42,7 +48,17 @@ class FetchCurrencyRates extends Command
 
         if ($feed) {
             foreach ($feed->channel->item as $rssItem) {
-                $currencyRates = $this->parseCurrencyStringToArray((string)$rssItem->description);
+                $currencyRates = [];
+
+                // Get the currency code and rate array
+                try {
+                    $currencyRates = $this->parseCurrencyStringToArray((string)$rssItem->description);
+                } catch (Exception $e) {
+                    $this->error('There was an error while parsing currency data');
+                    $this->error('Reason: ' . $e->getMessage());
+                }
+
+                // Get the currency rate's published date
                 $publishedAt = DateTime::createFromFormat(DateTime::RSS, $rssItem->pubDate);
 
                 // Save each of the currency in the database
@@ -63,7 +79,8 @@ class FetchCurrencyRates extends Command
 
                         $currencyRate->save();
                     } catch (Exception $e) {
-                        $this->error('There was an error importing currency ' . $currency .  '. Published at ' . $publishedAt->format(DateTime::RSS));
+                        $this->error('There was an error while importing currency ' . $currency .  '. Published at ' . $publishedAt->format(DateTime::RSS));
+                        $this->error('Reason: ' . $e->getMessage());
                     }
                 }
             }
@@ -76,6 +93,7 @@ class FetchCurrencyRates extends Command
      *
      * @param $currencyString
      * @return array
+     * @throws Exception
      */
     protected function parseCurrencyStringToArray($currencyString)
     {
@@ -84,6 +102,10 @@ class FetchCurrencyRates extends Command
 
         foreach ($rawArray as $i => $value) {
             if ($i % 2 === 0) { // Finds the keys (currencies)
+                if (!preg_match(self::CURRENCY_FORMAT_REGEX, $value)) {
+                    throw new Exception('Wrong currency format');
+                }
+
                 $resultArray[$value] = null;
             } else { // Sets the exchange rates to the previous currency
                 $resultArray[$rawArray[$i - 1]] = (float)$value;
