@@ -28,8 +28,9 @@ Lai ielādētu valūtu kursus datubāzē, jāizpilda komanda
 docker-compose exec app php artisan currency:fetch
 ```
 
-Komanda ```currency:fetch``` arī ir iestatīta kā "schedule", kas izpildās divas reizes dienā plkst. 00:00 un 12:00. Lai palaistu "schedule", ir nepieciešams uzstādīt Laravel crontab, kas iespējams ar komandu (komanda jāizpilda iekš app konteinera) 
+Komanda ```currency:fetch``` arī ir iestatīta kā "schedule", kas izpildās divas reizes dienā plkst. 00:00 un 12:00. Lai palaistu "schedule", ir nepieciešams uzstādīt Laravel crontab, kas iespējams ar komandu (komandas jāizpilda iekš app konteinera) 
 ```bash
+crontab -e
 * * * * * php artisan schedule:run >> /dev/null 2>&1
 ```
 
